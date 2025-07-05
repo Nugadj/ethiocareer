@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Quiz | EthioCareer</title>
+  <link rel="stylesheet" href="assets/bootstrap/bootstrap.min.css" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <style>
+    body { 
+  font-family: 'Poppins', sans-serif; 
+  background: #f5f7fa; 
+  padding-top: 70px; /* Offset for fixed navbar */
+}
+    .container { 
+  max-width: 750px; 
+  margin: 2rem auto; 
+  padding: 2rem; 
+  background: #fff; 
+  border-radius: 10px; 
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  margin-top: 1rem;
+}
+    .option { padding: 12px; background: #f1f1f1; border-radius: 8px; margin-top: 10px; cursor: pointer; transition: 0.2s; }
+    .option:hover { background: #e0e0e0; }
+    .correct { background: #d4edda !important; }
+    .wrong { background: #f8d7da !important; }
+    .selected { background-color: #d2e3fc !important; border: 2px solid #007bff; }
+    .hidden { display: none; }
+    .explanation { font-size: 0.9rem; margin-top: 10px; color: #555; }
+    .timer { font-weight: bold; color: #dc3545; text-align: right; margin-bottom: 10px; }
+    .nav-link { font-weight: 500; }
+    .progress-bar { width: 0%; } /* Initial state for progress bar */
+  </style>
+</head>
+<body>
+
+<!-- 🧭 Navigation -->
+<nav class="navbar navbar-expand-md navbar-dark bg-primary sticky-top">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="index.html">EthioCareer</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="exams.html">Exams</a></li>
+        <li class="nav-item"><a class="nav-link" href="profile.html">Profile</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container" id="modeSelector">
+  <h3 class="text-center mb-4">Choose Quiz Mode</h3>
+  <div class="d-grid gap-3">
+    <button class="btn btn-primary" id="learningModeBtn">🧠 Learning Mode</button>
+    <button class="btn btn-outline-primary" id="examModeBtn">📝 Exam Mode</button>
+  </div>
+  <div class="mt-4">
+    <label for="numQuestions" class="form-label">Number of Questions:</label>
+    <input type="number" id="numQuestions" class="form-control" value="5" min="1" max="5">
+    <small class="form-text text-muted">Max 5 questions available for this demo.</small>
+  </div>
+</div>
+
+<div class="container hidden" id="quizContainer">
+  <div class="d-flex justify-content-between align-items-center mb-2">
+    <div id="questionTracker" class="fw-bold">Q1 of 5</div>
+    <div class="timer" id="timerBox" style="display: none;">⏱ <span id="timer">--:--</span></div>
+  </div>
+
+  <div class="progress mb-3">
+    <div class="progress-bar bg-info" role="progressbar" id="quizProgressBar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+  </div>
+  
+  <div id="questionText" class="mb-3 fw-semibold fs-5"></div>
+  <div id="optionsList"></div>
+  <div id="explanationBox" class="explanation"></div>
+
+  <div class="d-flex justify-content-between mt-4">
+    <button class="btn btn-outline-secondary" id="prevQuestionBtn">Previous</button>
+    <button class="btn btn-success" id="nextQuestionBtn">Next</button>
+  </div>
+</div>
+
+<!-- Result Modal -->
+<div class="modal fade" id="resultModal" tabindex="-1" aria-labelledby="resultModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="resultModalLabel">
+          Quiz Results - 
+          <span class="badge bg-primary rounded-pill">
+            Score: <span id="finalScoreDisplay">${score}/${totalQuizQuestions}</span>
+          </span>
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" id="resultBox">
+        <!-- Results will be injected here -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id="restartQuizBtn">Restart Quiz</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  // Quiz Data
+  const allQuestions = [
+    {
+      question: "What is the capital of Ethiopia?",
+      options: ["Gondar", "Adama", "Addis Ababa", "Dire Dawa"],
+      answer: 2,
+      explanation: "Addis Ababa is the capital and largest city of Ethiopia."
+    },
+    {
+      question: "Which law states F = ma?",
+      options: ["Newton's 1st", "Newton's 2nd", "Ohm's Law", "Hooke's Law"],
+      answer: 1,
+      explanation: "Newton's Second Law defines force as mass times acceleration."
+    },
+    {
+      question: "What does CPU stand for?",
+      options: ["Central Process Unit", "Central Processing Unit", "Control Panel Utility", "Central Print Unit"],
+      answer: 1,
+      explanation: "CPU stands for Central Processing Unit, the brain of the computer."
+    },
+    {
+      question: "What is H2O commonly known as?",
+      options: ["Hydrogen", "Oxygen", "Water", "Helium"],
+      answer: 2,
+      explanation: "H2O is the chemical formula for water."
+    },
+    {
+      question: "Which country colonized Ethiopia?",
+      options: ["Italy", "UK", "No one", "France"],
+      answer: 2,
+      explanation: "Ethiopia was never fully colonized, although invaded by Italy."
+    },
+    {
+      question: "What is the largest planet in our solar system?",
+      options: ["Mars", "Jupiter", "Saturn", "Earth"],
+      answer: 1,
+      explanation: "Jupiter is the largest planet in our solar system by mass and volume."
+    },
+    {
+      question: "Who painted the Mona Lisa?",
+      options: ["Vincent van Gogh", "Pablo Picasso", "Leonardo da Vinci", "Claude Monet"],
+      answer: 2,
+      explanation: "Leonardo da Vinci painted the Mona Lisa, one of the most famous artworks in the world."
+    }
+  ];
+
+  // DOM Elements (Cached)
+  const modeSelector = document.getElementById("modeSelector");
+  const quizContainer = document.getElementById("quizContainer");
+  const learningModeBtn = document.getElementById("learningModeBtn");
+  const examModeBtn = document.getElementById("examModeBtn");
+  const numQuestionsInput = document.getElementById("numQuestions");
+  const questionTracker = document.getElementById("questionTracker");
+  const timerBox = document.getElementById("timerBox");
+  const timerDisplay = document.getElementById("timer");
+  const quizProgressBar = document.getElementById("quizProgressBar");
+  const questionText = document.getElementById("questionText");
+  const optionsList = document.getElementById("optionsList");
+  const explanationBox = document.getElementById("explanationBox");
+  const prevQuestionBtn = document.getElementById("prevQuestionBtn");
+  const nextQuestionBtn = document.getElementById("nextQuestionBtn");
+  const resultModal = new bootstrap.Modal(document.getElementById('resultModal'));
+  const resultBox = document.getElementById("resultBox");
+  const restartQuizBtn = document.getElementById("restartQuizBtn");
+
+  // Quiz State Variables
+  let questions = []; // Questions for the current quiz instance
+  let currentQuestionIndex = 0;
+  let score = 0;
+  let selectedAnswers = []; // Stores index of selected option for each question
+  let quizMode = '';
+  let timerInterval;
+  let timeLeft = 0; // Time in seconds
+  let totalQuizQuestions = 0;
+
+  // Event Listeners
+  learningModeBtn.addEventListener('click', () => startQuiz('learning'));
+  examModeBtn.addEventListener('click', () => startQuiz('exam'));
+  prevQuestionBtn.addEventListener('click', prevQuestion);
+  nextQuestionBtn.addEventListener('click', nextQuestion);
+  restartQuizBtn.addEventListener('click', resetQuiz);
+
+  // Prevent accidental navigation during quiz
+  window.addEventListener('beforeunload', (event) => {
+    if (quizMode !== '' && currentQuestionIndex < totalQuizQuestions) {
+      event.preventDefault();
+      event.returnValue = ''; // Required for some browsers
+    }
+  });
+
+  function initializeQuizData() {
+    totalQuizQuestions = parseInt(numQuestionsInput.value, 10);
+    if (isNaN(totalQuizQuestions) || totalQuizQuestions <= 0) {
+      totalQuizQuestions = 5; // Default if invalid input
+      numQuestionsInput.value = 5;
+    }
+    if (totalQuizQuestions > allQuestions.length) {
+      totalQuizQuestions = allQuestions.length; // Cap at available questions
+      numQuestionsInput.value = allQuestions.length;
+    }
+
+    // Shuffle questions and select the required number
+    const shuffledQuestions = [...allQuestions].sort(() => 0.5 - Math.random());
+    questions = shuffledQuestions.slice(0, totalQuizQuestions);
+
+    currentQuestionIndex = 0;
+    score = 0;
+    selectedAnswers = Array(totalQuizQuestions).fill(null);
+    timeLeft = 120; // 2 minutes for exam mode
+    clearInterval(timerInterval); // Clear any previous timer
+  }
+
+  function startQuiz(mode) {
+    quizMode = mode;
+    initializeQuizData();
+
+    modeSelector.classList.add("hidden");
+    quizContainer.classList.remove("hidden");
+
+    if (quizMode === 'exam') {
+      timerBox.style.display = "block";
+      startTimer();
+    } else {
+      timerBox.style.display = "none";
+    }
+
+    showQuestion();
+    updateProgressBar();
+  }
+
+  function startTimer() {
+    updateTimerDisplay();
+    timerInterval = setInterval(() => {
+      timeLeft--;
+      updateTimerDisplay();
+      if (timeLeft <= 0) {
+        clearInterval(timerInterval);
+        showResult();
+      }
+    }, 1000);
+  }
+
+  function updateTimerDisplay() {
+    const minutes = Math.floor(timeLeft / 60);
+    const seconds = timeLeft % 60;
+    timerDisplay.innerText = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+  }
+
+  function updateProgressBar() {
+    const progress = ((currentQuestionIndex + 1) / totalQuizQuestions) * 100;
+    quizProgressBar.style.width = `${progress}%`;
+    quizProgressBar.setAttribute('aria-valuenow', progress);
+  }
+
+  function showQuestion() {
+    const q = questions[currentQuestionIndex];
+    questionText.innerText = q.question;
+    questionTracker.innerText = `Q${currentQuestionIndex + 1} of ${totalQuizQuestions}`;
+    optionsList.innerHTML = "";
+    explanationBox.innerText = "";
+    explanationBox.classList.add("hidden"); // Hide explanation by default
+
+    q.options.forEach((opt, idx) => {
+      const optEl = document.createElement("div");
+      optEl.className = "option";
+      optEl.innerText = opt;
+      optEl.dataset.index = idx; // Store index for easy access
+      optEl.addEventListener('click', () => handleAnswer(idx, optEl));
+
+      // Apply selected class if already answered
+      if (selectedAnswers[currentQuestionIndex] === idx) {
+        optEl.classList.add("selected");
+      }
+
+      // In learning mode, if already answered, show correct/wrong
+      if (quizMode === "learning" && selectedAnswers[currentQuestionIndex] !== null) {
+        if (idx === q.answer) {
+          optEl.classList.add("correct");
+        } else if (selectedAnswers[currentQuestionIndex] === idx) {
+          optEl.classList.add("wrong");
+        }
+        explanationBox.innerText = q.explanation;
+        explanationBox.classList.remove("hidden");
+      }
+      optionsList.appendChild(optEl);
+    });
+
+    // Manage navigation button visibility
+    prevQuestionBtn.disabled = currentQuestionIndex === 0;
+    nextQuestionBtn.innerText = (currentQuestionIndex === totalQuizQuestions - 1) ? "Finish Quiz" : "Next";
+  }
+
+  function handleAnswer(index, element) {
+    const q = questions[currentQuestionIndex];
+    const opts = optionsList.querySelectorAll(".option");
+
+    // Remove 'selected' from all options first
+    opts.forEach(opt => opt.classList.remove("selected", "correct", "wrong"));
+
+    selectedAnswers[currentQuestionIndex] = index;
+    element.classList.add("selected");
+
+    if (quizMode === "learning") {
+      if (index === q.answer) {
+        element.classList.add("correct");
+      } else {
+        element.classList.add("wrong");
+        // Highlight the correct answer
+        opts[q.answer].classList.add("correct");
+      }
+      explanationBox.innerText = q.explanation;
+      explanationBox.classList.remove("hidden");
+    }
+  }
+
+  function nextQuestion() {
+    if (quizMode === "learning" && selectedAnswers[currentQuestionIndex] === null) {
+      alert("Please select an answer before proceeding.");
+      return;
+    }
+
+    // Trial limit check (original functionality)
+    if (!localStorage.getItem("isPaid") && currentQuestionIndex + 1 === 5 && totalQuizQuestions >= 5) {
+      alert("🔒 Trial limit reached. Redirecting to unlock full access.");
+      setTimeout(() => window.location.href = "pay.html", 1500);
+      return;
+    }
+
+    if (currentQuestionIndex < totalQuizQuestions - 1) {
+      currentQuestionIndex++;
+      showQuestion();
+      updateProgressBar();
+    } else {
+      // Last question, show results
+      showResult();
+    }
+  }
+
+  function prevQuestion() {
+    if (currentQuestionIndex > 0) {
+      currentQuestionIndex--;
+      showQuestion();
+      updateProgressBar();
+    }
+  }
+
+  function calculateScore() {
+    score = 0;
+    questions.forEach((q, i) => {
+      if (selectedAnswers[i] === q.answer) {
+        score++;
+      }
+    });
+  }
+
+  function showResult() {
+    clearInterval(timerInterval);
+    calculateScore(); // Ensure score is updated before showing results
+
+    quizContainer.classList.add("hidden"); // Hide quiz interface
+
+    let resultMsg = `✅ You scored ${score} out of ${totalQuizQuestions}!<br>`;
+
+    // Store high score for exam mode
+    if (quizMode === 'exam') {
+      const highScore = parseInt(localStorage.getItem('highScore') || '0', 10);
+      if (score > highScore) {
+        localStorage.setItem('highScore', score);
+        resultMsg += `<p class="text-success fw-bold">🎉 New High Score: ${score}!</p>`;
+      } else {
+        resultMsg += `<p class="text-info">Your High Score: ${highScore}</p>`;
+      }
+    }
+
+    resultMsg += `<br><strong>Review Your Answers:</strong><ul class="list-group">`;
+    questions.forEach((q, i) => {
+      const userAnswer = selectedAnswers[i] !== null ? q.options[selectedAnswers[i]] : "Not Answered";
+      const correctAnswer = q.options[q.answer];
+      const isCorrect = selectedAnswers[i] === q.answer;
+
+      resultMsg += `<li class="list-group-item ${isCorrect ? 'list-group-item-success' : 'list-group-item-danger'} mb-2">
+        <strong>Q${i + 1}:</strong> ${q.question}<br>
+        Your Answer: <span class="${isCorrect ? 'text-success' : 'text-danger'} fw-bold">${userAnswer}</span><br>
+        Correct Answer: <span class="text-success fw-bold">${correctAnswer}</span><br>
+        <small class="text-muted">💡 ${q.explanation}</small>
+      </li>`;
+    });
+    resultMsg += "</ul>";
+
+    resultBox.innerHTML = resultMsg;
+    resultModal.show(); // Show the Bootstrap modal
+  }
+
+  function resetQuiz() {
+    resultModal.hide(); // Hide the modal
+    quizContainer.classList.add("hidden");
+    modeSelector.classList.remove("hidden");
+    // Reset UI elements
+    questionText.innerText = "";
+    optionsList.innerHTML = "";
+    explanationBox.innerText = "";
+    explanationBox.classList.add("hidden");
+    timerDisplay.innerText = "--:--";
+    quizProgressBar.style.width = "0%";
+    quizProgressBar.setAttribute('aria-valuenow', 0);
+    clearInterval(timerInterval);
+    quizMode = ''; // Reset quiz mode
+  }
+</script>
+</body>
+</html>

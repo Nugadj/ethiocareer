@@ -1,0 +1,44 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Login - EthioCareer</title>
+  <link rel="stylesheet" href="{% static 'assets/bootstrap/bootstrap.min.css'%}" />
+  <link rel="stylesheet" href="{% static 'assets/css/auth.css'%}" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div class="auth-container">
+  <form method="post" class="auth-form">
+    {% csrf_token %}
+    <h2>Welcome Back 👋</h2>
+    <p>Login to your EthioCareer account</p>
+
+    {% if form.errors %}
+      <div class="alert alert-danger">
+        <strong>Error:</strong> Please check your credentials.
+      </div>
+    {% endif %}
+
+    <div class="form-group">
+      <label>Username</label>
+      {{ form.username }}
+    </div>
+
+    <div class="form-group">
+      <label>Password</label>
+      {{ form.password }}
+    </div>
+
+    <button type="submit" class="btn btn-primary w-100">Login</button>
+
+    <p class="auth-link">Don’t have an account? <a href="{% url 'register'%}">Register now</a></p>
+  </form>
+</div>
+
+</body>
+</html>

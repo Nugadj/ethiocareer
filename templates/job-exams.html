@@ -1,0 +1,113 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EthioCareer | Job Exams</title>
+  <link rel="stylesheet" href="{% static 'assets/bootstrap/bootstrap.min.css'%}">
+  <link rel="stylesheet" href="{% static 'assets/css/style.css'%}">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
+  <div class="container">
+    <a class="navbar-brand" href="{% url 'index' %}">EthioCareer</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="{% url 'index' %}">Home</a></li>
+        <li class="nav-item"><a class="nav-link active" href="{% url 'exams' %}">Exams</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'jobs' %}">Jobs</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'scholarships'%}">Scholarships</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'pay' %}">Unlock</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Login</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Header -->
+<header class="py-5 bg-light text-center">
+  <div class="container">
+    <h1 class="fw-bold">Job Entrance Exams</h1>
+    <p class="lead">Select a company below to view past exams.</p>
+  </div>
+</header>
+
+<!-- Job Exam Options -->
+<section class="py-5">
+  <div class="container">
+    <div class="row g-4 text-center">
+      <div class="col-md-4">
+        <div class="card card-hover p-4">
+          <div class="card-body">
+            <i class="fas fa-plane-departure fa-2x mb-3 text-primary"></i>
+            <h4 class="card-title">Ethiopian Airlines</h4>
+            <p class="card-text">Access real entrance exams used in airline recruitment.</p>
+            <a href="{% url 'job_ethiopian_airlines'%}" class="btn btn-primary w-100">View Exams</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card card-hover p-4">
+          <div class="card-body">
+            <i class="fas fa-wifi fa-2x mb-3 text-success"></i>
+            <h4 class="card-title">Ethio Telecom</h4>
+            <p class="card-text">Access previous exams for telecom positions.</p>
+            <a href="{%url 'job_ethio_telecom'%}" class="btn btn-success w-100">View Exams</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card card-hover p-4">
+          <div class="card-body">
+            <i class="fas fa-shield-alt fa-2x mb-3 text-danger"></i>
+            <h4 class="card-title">INSA (Cyber Security)</h4>
+            <p class="card-text">Past entrance tests for National Intelligence roles.</p>
+            <a href="{%url 'job_insa'%}" class="btn btn-danger w-100">View Exams</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Add more companies below if needed -->
+    <div class="row g-4 text-center mt-4">
+      <div class="col-md-4">
+        <div class="card card-hover p-4">
+          <div class="card-body">
+            <i class="fas fa-landmark fa-2x mb-3 text-dark"></i>
+            <h4 class="card-title">Civil Service</h4>
+            <p class="card-text">Ministries, agencies, bureaus past tests.</p>
+            <a href="{%url 'job_civil_service'%}" class="btn btn-dark w-100">View Exams</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="mb-2">
+      <a href="{{request.path}}" class="text-white me-3"><i class="fab fa-facebook"></i></a>
+      <a href="{{request.path}}" class="text-white me-3"><i class="fab fa-twitter"></i></a>
+      <a href="{{request.path}}" class="text-white me-3"><i class="fab fa-telegram"></i></a>
+      <a href="{{request.path}}" class="text-white me-3"><i class="fab fa-youtube fa-lg"></i></a>
+    </div>
+    <p>&copy; 2025 EthioCareer. Made with ❤️ in Ethiopia.</p>
+  </div>
+</footer>
+
+<script src="{% static 'assets/bootstrap/bootstrap.bundle.min.js'%}"></script>
+<script src="{% static 'assets/js/main.js'%}"></script>
+</body>
+</html>

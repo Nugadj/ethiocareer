@@ -1,0 +1,113 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ASTU Course List</title>
+  <link rel="stylesheet" href="{% static 'assets/bootstrap/bootstrap.min.css'%}">
+  <link rel="stylesheet" href="{% static 'assets/css/style.css'%}">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
+  <div class="container">
+    <a class="navbar-brand" href="{% url 'index' %}">EthioCareer</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="{% url 'index' %}">Home</a></li>
+        <li class="nav-item"><a class="nav-link active" href="{% url 'exams' %}">Exams</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'jobs' %}">Jobs</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'scholarships'%}">Scholarships</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'pay' %}">Unlock</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Login</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Header -->
+<header class="py-5 bg-light text-center">
+  <div class="container">
+    <h1 class="fw-bold">ASTU Course List</h1>
+    <p class="lead">Select a course to explore mid exams, finals, outlines, and resources.</p>
+  </div>
+</header>
+
+<!-- Course List -->
+<section class="py-5">
+  <div class="container">
+    <div class="row g-4 text-center">
+      <div class="col-md-4">
+        <div class="card p-4">
+          <div class="card-body">
+            <i class="fas fa-calculator fa-2x mb-3 text-primary"></i>
+            <h4 class="card-title">Applied Mathematics I</h4>
+            <a href="{% url 'astu_appliedmath1' %}" class="btn btn-outline-primary w-100">Explore</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card p-4">
+          <div class="card-body">
+            <i class="fas fa-atom fa-2x mb-3 text-success"></i>
+            <h4 class="card-title">General Physics I</h4>
+            <a href="{% url 'astu_physics1'%}" class="btn btn-outline-success w-100">Explore</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card p-4">
+          <div class="card-body">
+            <i class="fas fa-laptop-code fa-2x mb-3 text-info"></i>
+            <h4 class="card-title">Introduction to Programming</h4>
+            <a href="{% url 'astu_programming'%}" class="btn btn-outline-info w-100">Explore</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card p-4">
+          <div class="card-body">
+            <i class="fas fa-vial fa-2x mb-3 text-warning"></i>
+            <h4 class="card-title">General Chemistry</h4>
+            <a href="{% url 'astu_chemistry'%}" class="btn btn-outline-warning w-100">Explore</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card p-4">
+          <div class="card-body">
+            <i class="fas fa-network-wired fa-2x mb-3 text-danger"></i>
+            <h4 class="card-title">Basic Electrical Engineering</h4>
+            <a href="{% url 'astu_electrical'%}" class="btn btn-outline-danger w-100">Explore</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="mb-2">
+      <a href="{{request.path}}" class="text-white me-3"><i class="fab fa-facebook"></i></a>
+      <a href="{{request.path}}" class="text-white me-3"><i class="fab fa-twitter"></i></a>
+      <a href="{{request.path}}" class="text-white me-3"><i class="fab fa-telegram"></i></a>
+      <a href="{{request.path}}" class="text-white me-3"><i class="fab fa-youtube fa-lg"></i></a>
+    </div>
+    <p>&copy; 2025 EthioCareer. Made with ❤️ in Ethiopia.</p>
+  </div>
+</footer>
+
+<script src="{% static 'assets/bootstrap/bootstrap.bundle.min.js'%}"></script>
+<script src="{% static 'assets/js/main.js'%}"></script>
+</body>
+</html>

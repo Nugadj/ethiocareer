@@ -1,0 +1,50 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Login - EthioCareer</title>
+  <link rel="stylesheet" href="{% static 'assets/bootstrap/bootstrap.min.css'%}" />
+  <link rel="stylesheet" href="{% static 'assets/css/auth.css'%}" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <div class="auth-container">
+  <form method="post" class="auth-form">
+    {% csrf_token %}
+    <h2>Create Account 👋</h2>
+    <p>Register to access EthioCareer</p>
+
+    {% if form.errors %}
+      <div class="alert alert-danger">
+        <strong>Error:</strong> Please correct the form.
+        {{ form.errors }}
+      </div>
+    {% endif %}
+
+    <div class="form-group">
+      <label>Username</label>
+      {{ form.username }}
+    </div>
+
+    <div class="form-group">
+      <label>Password</label>
+      {{ form.password1 }}
+    </div>
+
+    <div class="form-group">
+      <label>Confirm Password</label>
+      {{ form.password2 }}
+    </div>
+
+    <button type="submit" class="btn btn-success w-100">Register</button>
+
+    <p class="auth-link">Already have an account? <a href="{% url 'login' %}">Login here</a></p>
+  </form>
+</div>
+
+</body>
+</html>

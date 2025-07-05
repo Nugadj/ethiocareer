@@ -1,0 +1,113 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Natural Science Subjects - Grade 12</title>
+  <link rel="stylesheet" href="{% static 'assets/bootstrap/bootstrap.min.css'%}">
+  <link rel="stylesheet" href="{% static 'assets/css/style.css'%}">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
+  <div class="container">
+    <a class="navbar-brand" href="{% url 'index' %}">EthioCareer</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="{% url 'index' %}">Home</a></li>
+        <li class="nav-item"><a class="nav-link active" href="{% url 'exams' %}">Exams</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'jobs' %}">Jobs</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'scholarships'%}">Scholarships</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'pay' %}">Unlock</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Login</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Header -->
+<header class="py-5 bg-light text-center">
+  <div class="container">
+    <h1 class="fw-bold">Natural Science Subjects</h1>
+    <p class="lead">Choose a subject to view Grade 12 national exam years.</p>
+  </div>
+</header>
+
+<!-- Subjects List -->
+<section class="py-5">
+  <div class="container">
+    <div class="row g-4 text-center">
+      <div class="col-md-4">
+        <div class="card p-4 card-hover">
+          <div class="card-body">
+            <i class="fas fa-atom fa-2x mb-3 text-primary"></i>
+            <h4 class="card-title">Physics</h4>
+            <a href="{%url 'physics_exams'%}" class="btn btn-outline-primary w-100">View Physics Exams</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card p-4 card-hover">
+          <div class="card-body">
+            <i class="fas fa-vial fa-2x mb-3 text-success"></i>
+            <h4 class="card-title">Chemistry</h4>
+            <a href="{%url 'chemistry_exams'%}" class="btn btn-outline-success w-100">View Chemistry Exams</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card p-4 card-hover">
+          <div class="card-body">
+            <i class="fas fa-dna fa-2x mb-3 text-danger"></i>
+            <h4 class="card-title">Biology</h4>
+            <a href="{%url 'biology_exams'%}" class="btn btn-outline-danger w-100">View Biology Exams</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card p-4 card-hover">
+          <div class="card-body">
+            <i class="fas fa-square-root-alt fa-2x mb-3 text-warning"></i>
+            <h4 class="card-title">Mathematics</h4>
+            <a href="{%url 'math_exams'%}" class="btn btn-outline-warning w-100">View Math Exams</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card p-4 card-hover">
+          <div class="card-body">
+            <i class="fas fa-laptop-code fa-2x mb-3 text-info"></i>
+            <h4 class="card-title">ICT</h4>
+            <a href="{% url 'ict_exams'%}" class="btn btn-outline-info w-100">View ICT Exams</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="mb-2">
+      <a href="{{request.path}}" class="text-white me-3"><i class="fab fa-facebook"></i></a>
+      <a href="{{request.path}}" class="text-white me-3"><i class="fab fa-twitter"></i></a>
+      <a href="{{request.path}}" class="text-white me-3"><i class="fab fa-telegram"></i></a>
+      <a href="{{request.path}}" class="text-white me-3"><i class="fab fa-youtube fa-lg"></i></a>
+    </div>
+    <p>&copy; 2025 EthioCareer. Made with ❤️ in Ethiopia.</p>
+  </div>
+</footer>
+
+<script src="{% static 'assets/bootstrap/bootstrap.bundle.min.js'%}"></script>
+<script src="{% static 'assets/js/main.js'%}"></script>
+</body>
+</html>

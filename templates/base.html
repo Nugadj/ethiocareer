@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>{% block title %}EthioCareer{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+</head>
+<body>
+  <nav>
+    <ul>
+      <li><a href="/">🏠 Home</a></li>
+      <li><a href="/exams/">📝 Exams</a></li>
+      <li><a href="/jobs/">💼 Jobs</a></li>
+      <li><a href="/scholarships/">🎓 Scholarships</a></li>
+      <li><a href="/users/profile/">👤 Profile</a></li>
+    </ul>
+  </nav>
+
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+</body>
+</html>

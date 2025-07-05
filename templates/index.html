@@ -1,0 +1,148 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎓</text></svg>">
+
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EthioCareer - Unlock Your Future</title>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="{% static 'assets/bootstrap/bootstrap.min.css' %} ">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <!-- Animate.css -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top shadow-sm">
+  <div class="container">
+    <a class="navbar-brand d-flex align-items-center" href="index.html">
+  <span style="font-weight:700; font-size:22px; color:#007bff;">
+    <span style="color:#ffc107;">🎓</span> EthioCareer
+  </span>
+</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto align-items-center">
+        <li class="nav-item nav-hover"><a class="nav-link" href="{% url 'index' %}">Home</a></li>
+        <li class="nav-item nav-hover"><a class="nav-link" href="{% url 'exams' %}">Exams</a></li>
+        <li class="nav-item nav-hover"><a class="nav-link" href="{% url 'jobs' %}">Jobs</a></li>
+        <li class="nav-item nav-hover"><a class="nav-link" href="{% url 'scholarships'%}">Scholarships</a></li>
+        <li class="nav-item nav-hover"><a class="nav-link" href="{% url 'pay' %}">Unlock</a></li>
+        <li class="nav-item nav-hover"><a class="nav-link" href="{% url 'login' %}">Login</a></li>
+        <li class="nav-item"><a class="nav-link" href="{{request.path}}" onclick="logout()">Logout</a></li>
+        <li class="nav-item ms-3">
+        <form class="d-flex align-items-center search-form" role="search">
+        <input class="form-control form-control-sm me-2 rounded-pill shadow-sm" type="search" placeholder="Search..." aria-label="Search">
+            <button class="btn btn-outline-primary btn-sm rounded-circle shadow-sm search-btn" type="submit">
+             <i class="fas fa-search"></i>
+            </button>
+         </form>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+<script>
+  AOS.init();
+</script>
+
+<!-- Hero Section -->
+<section class="hero">
+  <div class="container">
+    <h1 class="animate__animated animate__fadeInDown">Build Your Future with Confidence</h1>
+    <p class="animate__animated animate__fadeInUp">Access past exams, job insights, and scholarship paths — all in one platform.</p>
+    <a href="{% url 'exams' %}" class="btn btn-light text-primary fw-bold animate__animated animate__zoomIn">Start Exploring</a>
+  </div>
+</section>
+
+<!-- Features Section -->
+<section class="section">
+  <div class="container">
+    <div class="row text-center">
+      <div class="col-md-4 mb-4">
+        <div class="card card-hover shadow-sm p-4 animate__animated animate__fadeInUp animate__delay-1s">
+          <div class="card-body">
+            <h4 class="card-title">Past Year Exams</h4>
+            <p class="card-text">Well-organized, solved national and university entrance exams with explanations.</p>
+            <a href="{% url 'exams' %}" class="btn btn-outline-primary rounded-pill">View Exams</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4 mb-4">
+        <div class="card card-hover shadow-sm p-4 animate__animated animate__fadeInUp animate__delay-2s">
+          <div class="card-body">
+            <h4 class="card-title">Job Vacancies</h4>
+            <p class="card-text">Discover verified job opportunities and get tips for application success.</p>
+            <a href="{% url 'jobs' %}" class="btn btn-outline-primary rounded-pill">View Jobs</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4 mb-4">
+        <div class="card card-hover shadow-sm p-4 animate__animated animate__fadeInUp animate__delay-3s">
+          <div class="card-body">
+            <h4 class="card-title">Scholarships</h4>
+            <p class="card-text">Access both local and international scholarship opportunities with guidance.</p>
+            <a href="{% url 'scholarships'%}" class="btn btn-outline-primary rounded-pill">View Scholarships</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Additional Info Section -->
+<section class="info-section text-center">
+  <div class="container" data-aos="fade-up">
+    <h2 class="mb-4">Why Choose EthioCareer?</h2>
+    <p>We are the first Ethiopian platform to combine historical exam banks, career insights, and real scholarship guidance in one. Whether you're a high school student, university graduate, or job seeker, EthioCareer is built to serve you with accurate and localized resources. Discover smarter ways to prepare for your future starting today.</p>
+    <div class="feature-grid mt-5">
+      <div class="feature-item">
+        <h5>📘 Real Exam Archives</h5>
+        <p>Access actual past exam questions and solutions from trusted sources.</p>
+      </div>
+      <div class="feature-item">
+        <h5>🎯 Focused Career Advice</h5>
+        <p>Learn how to prepare for interviews, write resumes, and find opportunities.</p>
+      </div>
+      <div class="feature-item">
+        <h5>🌍 Scholarship Access</h5>
+        <p>Step-by-step guidance on how to apply for fully funded local & global scholarships.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Social & Footer -->
+<footer>
+  <div class="container">
+    <div class="mb-2">
+      <a href="{{request.path}}" class="text-white me-3"><i class="fab fa-facebook"></i></a>
+      <a href="{{request.path}}" class="text-white me-3"><i class="fab fa-twitter"></i></a>
+      <a href="{{request.path}}" class="text-white me-3"><i class="fab fa-telegram"></i></a>
+      <a href="{{request.path}}" class="text-white me-3"><i class="fab fa-youtube fa-lg"></i></a>
+    </div>
+    <p>&copy; 2025 EthioCareer. Made with ❤️ in Ethiopia.</p>
+  </div>
+</footer>
+
+<script src="{% static 'assets/bootstrap/bootstrap.bundle.min.js' %} "></script>
+<script src="{% static 'assets/js/main.js'%}"></script>
+</body>
+</html>

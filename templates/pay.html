@@ -1,0 +1,141 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Unlock Full Access - EthioCareer</title>
+  <link rel="stylesheet" href="{% static 'assets/bootstrap/bootstrap.min.css'%}" />
+  <link rel="stylesheet" href="{% static 'assets/css/style.css'%}" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+  <script defer src="{% static 'assets/js/main.js'%}"></script>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #f9fafb;
+    }
+    .payment-container {
+      max-width: 600px;
+      margin: 3rem auto;
+      background: white;
+      padding: 2rem 2.5rem;
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgb(0 0 0 / 0.1);
+    }
+    h1 {
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: #2c3e50;
+    }
+    p.lead {
+      color: #555;
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+    }
+    .btn-primary {
+      background: #007bff;
+      border: none;
+      font-weight: 600;
+      padding: 0.75rem 2rem;
+      border-radius: 50px;
+      transition: background 0.3s ease;
+    }
+    .btn-primary:hover {
+      background: #0056b3;
+    }
+    .instructions {
+      background: #eef6ff;
+      border-left: 6px solid #007bff;
+      padding: 1rem 1.5rem;
+      margin-bottom: 2rem;
+      color: #004085;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+    label {
+      font-weight: 600;
+      margin-top: 1rem;
+      display: block;
+    }
+    input[type="file"] {
+      margin-top: 0.5rem;
+    }
+    .receipt-upload {
+      margin-top: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .success-message {
+      color: green;
+      font-weight: 600;
+      margin-top: 1rem;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
+  <div class="container">
+    <a class="navbar-brand" href="{% url 'index' %}">EthioCareer</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="{% url 'index' %}">Home</a></li>
+        <li class="nav-item"><a class="nav-link active" href="{% url 'exams' %}">Exams</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'jobs' %}">Jobs</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'scholarships'%}">Scholarships</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'pay' %}">Unlock</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Login</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<section class="payment-container">
+  <h1>Unlock Full Access</h1>
+  <p class="lead">You currently have a <strong>1-day free trial</strong> with limited access (30% of content). To enjoy all premium features and unlimited access, please complete a one-time payment of <strong>100 Birr</strong>.</p>
+  
+  <div class="instructions">
+    <h5>How to Pay:</h5>
+    <ul>
+      <li>Pay 100 Birr via <strong>Telebirr</strong> or <strong>Commercial Bank of Ethiopia (CBE)</strong>.</li>
+      <li>Telebirr Number: <code>+251 9XX XXX XXX</code></li>
+      <li>CBE Account Number: <code>1234567890</code> (Account Name: EthioCareer)</li>
+      <li>After payment, upload your payment receipt below for verification.</li>
+    </ul>
+  </div>
+
+  <form id="paymentForm" onsubmit="return handlePayment(event)" enctype="multipart/form-data">
+    <label for="receipt">Upload Payment Receipt (Image/PDF):</label>
+    <input type="file" id="receipt" name="receipt" accept="image/*,application/pdf" required />
+    <button type="submit" class="btn btn-primary w-100 mt-3">Submit & Unlock</button>
+  </form>
+
+  <p class="success-message" id="successMessage">Thank you! Your payment receipt has been received. Access will be unlocked after verification.</p>
+</section>
+
+<script>
+  function handlePayment(event) {
+    event.preventDefault();
+    const receiptInput = document.getElementById('receipt');
+    if (!receiptInput.files.length) {
+      alert('Please upload your payment receipt.');
+      return false;
+    }
+    // Simulate upload & verification delay
+    setTimeout(() => {
+      localStorage.setItem('isUnlocked', 'true');  // Unlock user locally
+      document.getElementById('successMessage').style.display = 'block';
+      event.target.reset();
+    }, 1000);
+    return false;
+  }
+</script>
+
+<script src="{% static 'assets/bootstrap/bootstrap.bundle.min.js'%}"></script>
+</body>
+</html>
