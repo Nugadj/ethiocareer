@@ -1,0 +1,42 @@
+body {
+  background: #f0f2f5;
+  font-family: 'Poppins', sans-serif;
+}
+
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.auth-form {
+  background: white;
+  padding: 2rem 2.5rem;
+  border-radius: 12px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+  width: 100%;
+  max-width: 400px;
+}
+
+.auth-form h2 {
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: #2c3e50;
+}
+
+.auth-form p {
+  color: #555;
+  font-size: 0.95rem;
+  margin-bottom: 1.5rem;
+}
+
+.auth-form .form-group {
+  margin-bottom: 1rem;
+}
+
+.auth-form .auth-link {
+  text-align: center;
+  margin-top: 1rem;
+  font-size: 0.9rem;
+}
